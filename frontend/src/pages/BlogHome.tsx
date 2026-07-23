@@ -149,6 +149,9 @@ export default function BlogHome() {
         <div className="sm:hidden border-b border-gray-100 px-4 py-3 bg-white space-y-2">
           <Link to={"/createblog"}><button className="block text-sm text-gray-700 py-1 cursor-pointer">✏️ Write</button></Link>
           {token && <SignOut />}
+          <div className="border-t border-gray-100 pt-4 mt-1">
+            <TopPicks blogs={blogs} skip={5} />
+          </div>
         </div>
       )}
 
@@ -290,7 +293,7 @@ export default function BlogHome() {
 
           </main>
 
-          <div className="px-4 sm:px-6 py-6 border-t border-gray-100 lg:border-t-0 lg:border-l-0 lg:w-72 lg:flex-shrink-0">
+          <div className="hidden lg:block px-6 py-6 lg:w-72 lg:flex-shrink-0">
 
             <TopPicks blogs={blogs} skip={5} />
 
