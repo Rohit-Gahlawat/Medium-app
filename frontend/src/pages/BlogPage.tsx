@@ -180,7 +180,7 @@ export default function BlogPage() {
                       <p className="text-xs text-gray-400 mt-0.5">
                         {Math.max(
                           1,
-                          Math.floor((u.content?.length || 0) / 100)
+                          Math.floor((u.content?.length || 0) / 200)
                         )}{" "}
                         min read
                       </p>

@@ -44,7 +44,7 @@ export default function TopPicks({ blogs, skip }: { blogs: Blog[]; skip: number 
 
           const hash = pick.id.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0)
           const color = avatarColors[hash % avatarColors.length]
-          const readTime = `${Math.max(1, Math.floor((pick.content?.length || 0) / 100))} min read`;
+          const readTime = `${Math.max(1, Math.floor((pick.content?.length || 0) / 200))} min read`;
 
           return (
             <Link key={pick.id} to={`/blog/${pick.id}`} className="block group">

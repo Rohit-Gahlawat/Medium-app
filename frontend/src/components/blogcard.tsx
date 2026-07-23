@@ -91,7 +91,7 @@ export default function ArticleCard({ article, saved, onToggleSave }: { article:
 
 
 
-  const readTime = `${Math.max(1, Math.floor((article.content?.length || 0) / 100))} min read`;
+  const readTime = `${Math.max(1, Math.floor((article.content?.length || 0) / 200))} min read`;
 
   const hash = article.id.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0)
 

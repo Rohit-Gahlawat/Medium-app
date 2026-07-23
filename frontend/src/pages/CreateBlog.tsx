@@ -32,7 +32,7 @@ export const CreateBlog = () => {
     }
 
     const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0
-    const readTime = Math.max(1, Math.floor(wordCount / 200))
+    const readTime = Math.max(1, Math.floor(content.length / 200))
 
     return (
         <div className="min-h-screen bg-white">
