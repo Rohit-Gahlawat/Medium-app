@@ -7,6 +7,7 @@ type Blog = {
     title: string
     content: string
     author: {
+        id: string
         name: string
     }
 }
@@ -14,6 +15,8 @@ type Blog = {
 export const useBlogs = () => {
     const [loading, setLoading] = useState(true)
     const [blogs, setBlogs] = useState<Blog[]>([])
+    const [savedIds, setSavedIds] = useState<string[]>([])
+    const [followingIds, setFollowingIds] = useState<string[]>([])
 
     useEffect(() => {
 
@@ -23,10 +26,12 @@ export const useBlogs = () => {
             }
         }).then((res) => {
             setBlogs(res.data.blogs)
+            setSavedIds(res.data.savedIds || [])
+            setFollowingIds(res.data.followingIds || [])
             setLoading(false)
         }).catch(() => {
             setLoading(false)
         })
     }, []);
-    return { loading, blogs }
+    return { loading, blogs, savedIds, setSavedIds, followingIds, setFollowingIds }
 }

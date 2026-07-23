@@ -15,8 +15,10 @@ export const Signin = () => {
         password: ""
     })
     const [showpassword, setShowPassword] = useState(false)
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const sendReq = async () => {
+        setLoading(true)
         try {
             const response = await axios.post(
                 `${BACKEND_URL}user/signin`,
@@ -29,6 +31,8 @@ export const Signin = () => {
         } catch (e) {
             alert("Error while signing in")
             console.log(e)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -89,7 +93,7 @@ export const Signin = () => {
                     </div>
 
                     <div className="flex justify-center w-full">
-                        <Buttons onClick={sendReq} text="Sign In" />
+                        <Buttons onClick={sendReq} text="Sign In" loading={loading} loadingText="Signing in..." />
                     </div>
 
                 </div>

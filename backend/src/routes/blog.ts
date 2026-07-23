@@ -107,6 +107,7 @@ blogRouter.put('/', async (c) => {
 blogRouter.get('/bulk', async (c) => {
     const prisma = new PrismaClient({ accelerateUrl: c.env.DATABASE_URL, })
         .$extends(withAccelerate());
+    const userId = c.get('userId');
 
     const allBlogs = await prisma.blog.findMany({
         select: {
@@ -115,15 +116,75 @@ blogRouter.get('/bulk', async (c) => {
             id: true,
             author: {
                 select: {
+                    id: true,
                     name: true
                 }
             }
         }
     });
 
+    // sent along with the feed so the save and follow buttons already
+    // know what this user has saved / followed on first paint
+    const saved = await prisma.saved.findMany({
+        where: {
+            userId: userId
+        },
+        select: {
+            blogId: true
+        }
+    })
+
+    const following = await prisma.follow.findMany({
+        where: {
+            followerId: userId
+        },
+        select: {
+            followingId: true
+        }
+    })
+
+    return c.json({
+        blogs: allBlogs,
+        savedIds: saved.map((s) => s.blogId),
+        followingIds: following.map((f) => f.followingId)
+    });
+})
 
 
-    return c.json({ blogs: allBlogs });
+blogRouter.post('/save/:id', async (c) => {
+    const prisma = new PrismaClient({ accelerateUrl: c.env.DATABASE_URL, })
+        .$extends(withAccelerate());
+    const userId = c.get('userId');
+    const blogId = c.req.param('id');
+
+    const already = await prisma.saved.findUnique({
+        where: {
+            userId_blogId: {
+                userId: userId,
+                blogId: blogId
+            }
+        }
+    })
+
+    if (already) {
+        await prisma.saved.delete({
+            where: {
+                userId_blogId: {
+                    userId: userId,
+                    blogId: blogId
+                }
+            }
+        })
+        return c.json({ saved: false })
+    }
+
+    await prisma.saved.create({
+        data: {
+            userId: userId,
+            blogId: blogId
+        }
+    })
+    return c.json({ saved: true })
 })
 
 
@@ -143,6 +204,7 @@ blogRouter.get('/:id', async (c) => {
             published: true,
             author: {
                 select: {
+                    id: true,
                     name: true
                 }
             }

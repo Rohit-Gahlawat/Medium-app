@@ -7,6 +7,7 @@ type Blog = {
     id: string;
     published: boolean;
     author: {
+        id: string
         name: string
     }
 }

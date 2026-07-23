@@ -18,12 +18,14 @@ export const Signup = () => {
         password: ""
     });
     const [showpassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
     const passwordRules = {
         minLength: postinputs.password.length >= 8,
         uppercase: /[A-Z]/.test(postinputs.password),
         number: /[0-9]/.test(postinputs.password),
     }
     const sendReq = async () => {
+        setLoading(true)
         try {
             const response = await axios.post(
                 `${BACKEND_URL}user/signup`,
@@ -38,6 +40,8 @@ export const Signup = () => {
 
 
             console.log(e.response?.data)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -126,7 +130,7 @@ export const Signup = () => {
 
 
                     <div className="flex justify-center w-full">
-                        <Buttons onClick={sendReq} text="Sign Up" />
+                        <Buttons onClick={sendReq} text="Sign Up" loading={loading} loadingText="Creating account..." />
                     </div>
 
                 </div>

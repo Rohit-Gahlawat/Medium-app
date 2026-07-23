@@ -1,15 +1,26 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useBlog } from "../hooks/useblog";
 import { useBlogs } from "../hooks";
+import SignOut from "../components/signout";
+import FollowButton from "../components/followbutton";
 
 export default function BlogPage() {
   const { id } = useParams<{ id: string }>();
   const { loading, blog } = useBlog(id!);
-  const { blogs } = useBlogs();
+  const { blogs, followingIds } = useBlogs();
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
   const suggestions = blogs.filter((u) => u.id !== id).slice(0, 3);
+
+  // the jwt payload carries the logged in user id, used so you
+  // don't get a follow button on your own story
+  let myId = ""
+  try {
+    myId = JSON.parse(atob(token!.split(".")[1])).id
+  } catch (e) {
+    myId = ""
+  }
 
   if (loading) {
     return (
@@ -73,6 +84,8 @@ export default function BlogPage() {
               Sign in
             </button>
           )}
+
+          {token && <SignOut />}
         </div>
       </nav>
 
@@ -148,9 +161,12 @@ export default function BlogPage() {
 
               </div>
 
-              <button className="text-xs sm:text-sm bg-gray-900 text-white px-4 sm:px-5 py-2 rounded-full font-medium hover:bg-gray-700 transition-colors whitespace-nowrap">
-                Follow
-              </button>
+              {blog.author?.id && blog.author.id !== myId && (
+                <FollowButton
+                  creatorId={blog.author.id}
+                  following={followingIds.includes(blog.author.id)}
+                />
+              )}
 
               {/* Divider */}
               <div className="border-t border-gray-100 mt-8 pt-8">

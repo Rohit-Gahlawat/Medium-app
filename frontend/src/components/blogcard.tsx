@@ -1,4 +1,6 @@
 import { useState } from "react";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 const avatarColors = [
   "bg-teal-100 text-teal-800",
@@ -56,15 +58,32 @@ type Article = {
   title: string;
   content: string;
   author: {
+    id: string
     name: string
   }
 
 };
 
-export default function ArticleCard({ article }: { article: Article }) {
-  const [saved, setSaved] = useState(false);
+export default function ArticleCard({ article, saved, onToggleSave }: { article: Article; saved: boolean; onToggleSave: (id: string) => void }) {
+  const [saving, setSaving] = useState(false);
 
-
+  const handleSave = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setSaving(true)
+    try {
+      await axios.post(`${BACKEND_URL}blog/save/${article.id}`, {}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      onToggleSave(article.id)
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setSaving(false)
+    }
+  }
 
   const initials = (article.author?.name || "USER")
     .toUpperCase()
@@ -118,15 +137,14 @@ export default function ArticleCard({ article }: { article: Article }) {
           <span className="text-xs text-gray-400">{readTime}</span>
           <div className="ml-auto flex items-center gap-1">
             <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setSaved(!saved);
-              }}
-              className={`p-1 cursor-pointer rounded hover:bg-gray-100 text-sm ${saved ? "text-gray-900" : "text-gray-400"}`}
-              aria-label="Save"
+              onClick={handleSave}
+              disabled={saving}
+              className={`p-1 cursor-pointer rounded hover:bg-gray-100 text-sm disabled:opacity-50 ${saved ? "text-gray-900" : "text-gray-400"}`}
+              aria-label={saved ? "Remove from saved" : "Save"}
             >
-              {saved ? "🔖" : "🏷️"}
+              {saving
+                ? <span className="inline-block h-3.5 w-3.5 rounded-full border-2 border-gray-200 border-t-gray-600 animate-spin align-middle" />
+                : (saved ? "🔖" : "🏷️")}
             </button>
 
           </div>
