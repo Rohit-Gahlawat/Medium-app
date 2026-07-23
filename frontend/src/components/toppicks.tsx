@@ -11,12 +11,11 @@ type Blog = {
   title: string;
   content: string;
   author: {
+    id: string
     name: string
   }
 };
 
-// `skip` is how many blogs the feed is already showing at the top,
-// so top picks never repeats what the user is looking at
 export default function TopPicks({ blogs, skip }: { blogs: Blog[]; skip: number }) {
 
   const picks = blogs
@@ -31,7 +30,7 @@ export default function TopPicks({ blogs, skip }: { blogs: Blog[]; skip: number 
   return (
     <div className="lg:sticky lg:top-6">
 
-      <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">
+      <p className="text-[13px] font-semibold text-ink uppercase tracking-widest mb-4">
         Top picks
       </p>
 
@@ -50,22 +49,20 @@ export default function TopPicks({ blogs, skip }: { blogs: Blog[]; skip: number 
           return (
             <Link key={pick.id} to={`/blog/${pick.id}`} className="block group">
 
-              {/* Author row */}
               <div className="flex items-center gap-1.5 mb-1.5">
                 <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-medium flex-shrink-0 ${color}`}>
                   {initials}
                 </div>
-                <span className="text-xs text-gray-600 truncate">
+                <span className="text-[13px] text-ink truncate">
                   {pick.author?.name || "Anonymous"}
                 </span>
               </div>
 
-              {/* Title */}
-              <p className="text-sm font-semibold text-gray-900 leading-snug group-hover:underline line-clamp-2">
+              <p className="text-sm font-bold text-ink leading-snug group-hover:underline line-clamp-2">
                 {pick.title}
               </p>
 
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-[13px] leading-5 text-ink-muted mt-1">
                 {readTime}
               </p>
 

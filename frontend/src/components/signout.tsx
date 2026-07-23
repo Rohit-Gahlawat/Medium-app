@@ -10,7 +10,6 @@ export default function SignOut() {
     localStorage.removeItem("token");
     localStorage.removeItem("name");
 
-    // small delay so the spinner is actually visible before we leave the page
     setTimeout(() => {
       navigate("/signin");
     }, 500);

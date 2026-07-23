@@ -37,10 +37,8 @@ export const CreateBlog = () => {
     return (
         <div className="min-h-screen bg-white">
 
-            {/* Navbar */}
             <nav className="flex items-center justify-between px-4 sm:px-8 md:px-12 py-3 border-b border-gray-100">
 
-                {/* Left */}
                 <div className="flex items-center gap-3 sm:gap-4">
                     <span
                         onClick={() => navigate("/bloghome")}
@@ -59,9 +57,7 @@ export const CreateBlog = () => {
                     </div>
                 </div>
 
-                {/* Right */}
                 <div className="flex items-center gap-2 sm:gap-4">
-                    {/* Read time preview */}
                     {content && (
                         <span className="hidden sm:block text-xs text-gray-400">
                             {readTime} min read
@@ -78,37 +74,31 @@ export const CreateBlog = () => {
 
                     <SignOut />
 
-                    {/* Avatar */}
                     <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-sm font-semibold text-gray-700 cursor-pointer flex-shrink-0">
                         {(localStorage.getItem("name") || "U")[0].toUpperCase()}
                     </div>
                 </div>
             </nav>
 
-            {/* Editor */}
             <div className="flex justify-center px-4 sm:px-8">
                 <div className="w-full max-w-2xl pt-10 sm:pt-16 pb-32">
 
-                    {/* Title */}
                     <textarea
                         placeholder="Title"
                         value={title}
                         onChange={(e) => {
                             setTitle(e.target.value)
-                            // auto resize
                             e.target.style.height = "auto"
                             e.target.style.height = e.target.scrollHeight + "px"
                         }}
                         rows={1}
-                        className="w-full resize-none overflow-hidden bg-transparent outline-none text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 placeholder:text-gray-300 leading-tight mb-6"
+                        className="w-full resize-none overflow-hidden bg-transparent outline-none text-3xl sm:text-[42px] font-bold text-ink placeholder:text-gray-300 leading-tight sm:leading-[52px] tracking-[-0.462px] mb-6"
                     />
 
-                    {/* Divider */}
                     {title && (
                         <div className="border-t border-gray-100 mb-6" />
                     )}
 
-                    {/* Content */}
                     <textarea
                         placeholder="Tell your story..."
                         value={content}
@@ -118,13 +108,12 @@ export const CreateBlog = () => {
                             e.target.style.height = e.target.scrollHeight + "px"
                         }}
                         rows={10}
-                        className="w-full bg-transparent outline-none resize-none text-lg sm:text-xl leading-8 sm:leading-9 text-gray-700 placeholder:text-gray-300"
+                        className="w-full bg-transparent outline-none resize-none font-serif text-[19px] sm:text-[20px] leading-8 sm:leading-[32px] tracking-[-0.06px] text-ink placeholder:text-gray-300"
                     />
 
                 </div>
             </div>
 
-            {/* Bottom bar — mobile only */}
             <div className="fixed bottom-0 left-0 right-0 sm:hidden border-t border-gray-100 bg-white px-4 py-3 flex items-center justify-between">
                 <span className="text-xs text-gray-400">
                     {wordCount} words · {readTime} min read

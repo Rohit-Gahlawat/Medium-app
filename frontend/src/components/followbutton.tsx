@@ -6,8 +6,6 @@ export default function FollowButton({ creatorId, following }: { creatorId: stri
   const [isfollowing, setIsFollowing] = useState(following);
   const [loading, setLoading] = useState(false);
 
-  // the feed that tells us who we already follow loads after the blog does,
-  // so pick the answer up once it arrives
   useEffect(() => {
     setIsFollowing(following)
   }, [following])

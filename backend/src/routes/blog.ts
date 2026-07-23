@@ -123,8 +123,6 @@ blogRouter.get('/bulk', async (c) => {
         }
     });
 
-    // sent along with the feed so the save and follow buttons already
-    // know what this user has saved / followed on first paint
     const saved = await prisma.saved.findMany({
         where: {
             userId: userId

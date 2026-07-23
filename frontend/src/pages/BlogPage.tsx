@@ -13,8 +13,6 @@ export default function BlogPage() {
   const token = localStorage.getItem("token");
   const suggestions = blogs.filter((u) => u.id !== id).slice(0, 3);
 
-  // the jwt payload carries the logged in user id, used so you
-  // don't get a follow button on your own story
   let myId = ""
   try {
     myId = JSON.parse(atob(token!.split(".")[1])).id
@@ -55,7 +53,6 @@ export default function BlogPage() {
   return (
     <div className="min-h-screen bg-white font-sans">
 
-      {/* Nav */}
       <nav className="flex items-center justify-between px-3 sm:px-6 lg:px-8 py-3 border-b border-gray-100 gap-3">
 
         <span
@@ -89,20 +86,16 @@ export default function BlogPage() {
         </div>
       </nav>
 
-      {/* Main layout */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-12">
 
         <div className="flex flex-col lg:flex-row lg:gap-16">
 
-          {/* Article */}
-          <article className="flex-1 min-w-0">
+          <article className="flex-1 min-w-0 max-w-[680px]">
 
-            {/* Title */}
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-4 break-words">
+            <h1 className="text-3xl sm:text-[42px] font-bold text-ink leading-tight sm:leading-[52px] tracking-[-0.462px] mb-8 break-words">
               {blog.title}
             </h1>
 
-            {/* Author row */}
             <div className="flex items-center gap-3 mb-6 sm:mb-8 pb-6 sm:pb-8 border-b border-gray-100">
 
               <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-200 flex items-center justify-center text-xs sm:text-sm font-semibold text-gray-600 flex-shrink-0">
@@ -110,25 +103,24 @@ export default function BlogPage() {
               </div>
 
               <div className="min-w-0">
-                <p className="text-sm sm:text-base font-medium text-gray-900 break-words">
+                <p className="text-sm text-ink break-words">
                   {blog.author?.name || "Anonymous"}
                 </p>
 
-                <p className="text-xs text-gray-400">
+                <p className="text-[13px] leading-5 text-ink-muted">
                   {readTime}
                 </p>
               </div>
 
             </div>
 
-            {/* Content */}
             <div className="prose prose-gray max-w-none overflow-hidden">
 
               {blog.content.split("\n").map((para: string, i: number) =>
                 para.trim() ? (
                   <p
                     key={i}
-                    className="text-[15px] sm:text-lg text-gray-700 leading-7 sm:leading-relaxed mb-4 break-words"
+                    className="font-serif text-[19px] sm:text-[20px] text-ink leading-8 sm:leading-[32px] tracking-[-0.06px] mb-8 break-words"
                   >
                     {para}
                   </p>
@@ -139,12 +131,10 @@ export default function BlogPage() {
 
           </article>
 
-          {/* Sidebar */}
           <aside className="mt-10 lg:mt-0 w-full lg:w-64 lg:flex-shrink-0 border-t border-gray-100 pt-8 lg:border-t-0 lg:pt-0">
 
             <div className="lg:sticky lg:top-8">
 
-              {/* Author */}
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">
                 Author
               </p>
@@ -168,7 +158,6 @@ export default function BlogPage() {
                 />
               )}
 
-              {/* Divider */}
               <div className="border-t border-gray-100 mt-8 pt-8">
 
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">

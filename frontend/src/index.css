@@ -1,1 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-serif: "Source Serif 4", "Source Serif Pro", Georgia, Cambria, "Times New Roman", Times, serif;
+
+  --color-ink: #242424;
+  --color-ink-muted: #6b6b6b;
+  --color-page: #ffffff;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background-color: var(--color-page);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

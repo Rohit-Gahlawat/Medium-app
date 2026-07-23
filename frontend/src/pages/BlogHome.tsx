@@ -26,12 +26,10 @@ export default function BlogHome() {
     "following": "Following"
   }
 
-  // the save button already wrote to the db, this just keeps the ui in sync
   const toggleSave = (id: string) => {
     setSavedIds((c) => c.includes(id) ? c.filter((s) => s !== id) : [...c, id])
   }
 
-  // same endpoint as the follow button, it toggles either way
   const handleUnfollow = async (creatorId: string) => {
     setUnfollowing(creatorId)
     try {
@@ -51,8 +49,6 @@ export default function BlogHome() {
   const savedBlogs = blogs.filter((b) => savedIds.includes(b.id))
   const followingBlogs = blogs.filter((b) => followingIds.includes(b.author?.id))
 
-  // you can only follow someone from their blog, so every followed
-  // creator shows up here through at least one of their posts
   const followedCreators = followingBlogs.reduce((acc, b) => {
     if (!acc.some((a) => a.id === b.author.id)) {
       acc.push({ id: b.author.id, name: b.author.name })
@@ -84,11 +80,9 @@ export default function BlogHome() {
   return (
     <div className="min-h-screen bg-white font-sans">
 
-      {/* Nav */}
       <nav className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-gray-100">
         <div className="flex items-center gap-3 sm:gap-6">
           <span className="text-xl sm:text-2xl font-semibold tracking-tight">Sayit</span>
-          {/* Tabs — hidden on mobile */}
           <div className="hidden sm:flex">
             {(["for-you", "saved", "following"] as const).map((tab) => (
               <button
@@ -108,7 +102,6 @@ export default function BlogHome() {
           </div>
         </div>
 
-        {/* Desktop nav right */}
         <div className="hidden sm:flex items-center gap-3">
           <Link to={"/createblog"}><button className="text-sm text-gray-500 flex items-center gap-1 hover:text-gray-800 px-3 py-1 rounded-full cursor-pointer">
             ✏️ Write
@@ -123,10 +116,8 @@ export default function BlogHome() {
 
         </div>
 
-        {/* Mobile nav right */}
         <div className="flex sm:hidden items-center gap-1">
 
-          {/* Write button */}
           <Link
             to="/createblog"
             className="flex items-center justify-center h-9 w-9 rounded-full hover:bg-gray-100 transition-colors"
@@ -134,7 +125,6 @@ export default function BlogHome() {
             <span className="text-lg">✏️</span>
           </Link>
 
-          {/* Sign in */}
           {!token && (
             <Link
               to="/signin"
@@ -144,7 +134,6 @@ export default function BlogHome() {
             </Link>
           )}
 
-          {/* Menu */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="flex items-center justify-center h-9 w-9 rounded-full hover:bg-gray-100 text-gray-600 transition-colors"
@@ -156,7 +145,6 @@ export default function BlogHome() {
         </div>
       </nav>
 
-      {/* Mobile menu dropdown */}
       {menuOpen && (
         <div className="sm:hidden border-b border-gray-100 px-4 py-3 bg-white space-y-2">
           <Link to={"/createblog"}><button className="block text-sm text-gray-700 py-1 cursor-pointer">✏️ Write</button></Link>
@@ -164,7 +152,6 @@ export default function BlogHome() {
         </div>
       )}
 
-      {/* Mobile tabs */}
       <div className="flex sm:hidden border-b border-gray-100 px-4">
         {(["for-you", "saved", "following"] as const).map((tab) => (
           <button
@@ -183,7 +170,6 @@ export default function BlogHome() {
         ))}
       </div>
 
-      {/* Banner */}
       <div className="bg-yellow-400 px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-3">
         <span className="text-xs sm:text-sm text-gray-900">
           <strong>Get unlimited access</strong>
@@ -194,13 +180,10 @@ export default function BlogHome() {
         </span>
       </div>
 
-      {/* Main layout */}
       <div className="max-w-5xl mx-auto">
 
-        {/* On mobile: stacked. On lg: side by side */}
         <div className="lg:flex">
 
-          {/* Feed */}
           <main className="flex-1 px-4 sm:px-6 lg:border-r lg:border-gray-100">
             {activeTab === "for-you" &&
               blogs.map((article) => (
@@ -245,7 +228,6 @@ export default function BlogHome() {
               followedCreators.length > 0
                 ? <div className="py-6">
 
-                  {/* Creators you follow */}
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">
                     Creators you follow
                   </p>
@@ -273,7 +255,6 @@ export default function BlogHome() {
                     ))}
                   </div>
 
-                  {/* Their stories */}
                   <div className="border-t border-gray-100 mt-6">
                     {followingBlogs.map((article) => (
                       <Link key={article.id} to={`/blog/${article.id}`} className="block"  ><ArticleCard article={article} saved={savedIds.includes(article.id)} onToggleSave={toggleSave} />
@@ -309,7 +290,6 @@ export default function BlogHome() {
 
           </main>
 
-          {/* Sidebar — shown below feed on mobile/tablet, beside on lg */}
           <div className="px-4 sm:px-6 py-6 border-t border-gray-100 lg:border-t-0 lg:border-l-0 lg:w-72 lg:flex-shrink-0">
 
             <TopPicks blogs={blogs} skip={5} />

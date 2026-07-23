@@ -21,7 +21,6 @@ type Variables = {
 export const userRouter = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
 
-// signup and signin stay public, the follow routes below need a logged in user
 const authMiddleware = async (c: Context<{ Bindings: Bindings; Variables: Variables }>, next: Next) => {
   const header = c.req.header('Authorization');
   if (!header) {

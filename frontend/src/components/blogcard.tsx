@@ -112,29 +112,25 @@ export default function ArticleCard({ article, saved, onToggleSave }: { article:
     <div className="flex gap-3 sm:gap-4 py-5 sm:py-6 border-b border-gray-100 cursor-pointer group">
       <div className="flex-1 min-w-0">
 
-        {/* Author row */}
         <div className="flex items-center gap-1.5 sm:gap-2 mb-2">
           <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0 ${color}`}>
             {initials}
           </div>
-          <span className="text-xs sm:text-sm font-medium text-gray-800">{article.author?.name || "Anonymous"}</span>
-          <span className="text-gray-400 text-xs sm:text-sm">·</span>
-          <span className="text-xs sm:text-sm text-gray-500">{date}</span>
+          <span className="text-sm text-ink">{article.author?.name || "Anonymous"}</span>
+          <span className="text-ink-muted text-sm">·</span>
+          <span className="text-[13px] text-ink-muted">{date}</span>
         </div>
 
-        {/* Title */}
-        <h2 className="text-base sm:text-lg font-semibold text-gray-900 leading-snug mb-1.5 sm:mb-2 group-hover:underline line-clamp-2 sm:line-clamp-none">
+        <h2 className="text-lg sm:text-[22px] font-bold text-ink leading-snug sm:leading-[30px] tracking-[-0.2px] mb-1.5 sm:mb-2 group-hover:underline line-clamp-2 sm:line-clamp-none">
           {article.title}
         </h2>
 
-        {/* content */}
-        <p className=" text-sm text-gray-500 leading-relaxed mb-3 line-clamp-2">
+        <p className=" text-sm text-ink-muted leading-relaxed mb-3 line-clamp-2">
           {article.content}
         </p>
 
-        {/* Meta row */}
         <div className="flex items-center gap-1.5 sm:gap-2">
-          <span className="text-xs text-gray-400">{readTime}</span>
+          <span className="text-[13px] text-ink-muted">{readTime}</span>
           <div className="ml-auto flex items-center gap-1">
             <button
               onClick={handleSave}
@@ -152,7 +148,6 @@ export default function ArticleCard({ article, saved, onToggleSave }: { article:
 
       </div>
 
-      {/* Thumbnail */}
       <div className={`w-20 h-16 sm:w-28 sm:h-20 rounded-lg flex-shrink-0 flex items-center justify-center text-3xl sm:text-4xl ${thumbnail.thumbColor}`}>
         {thumbnail.thumbIcon}
       </div>
