@@ -16,6 +16,7 @@ export default function BlogHome() {
 
   const [activeTab, setActiveTab] = useState<"for-you" | "saved" | "following">("for-you");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [picksOpen, setPicksOpen] = useState(false);
   const [unfollowing, setUnfollowing] = useState("");
   const { loading, blogs, savedIds, setSavedIds, followingIds, setFollowingIds } = useBlogs();
   const token = localStorage.getItem("token");
@@ -149,8 +150,19 @@ export default function BlogHome() {
         <div className="sm:hidden border-b border-gray-100 px-4 py-3 bg-white space-y-2">
           <Link to={"/createblog"}><button className="block text-sm text-gray-700 py-1 cursor-pointer">✏️ Write</button></Link>
           {token && <SignOut />}
-          <div className="border-t border-gray-100 pt-4 mt-1">
-            <TopPicks blogs={blogs} skip={5} />
+          <div className="border-t border-gray-100 pt-3 mt-1">
+            <button
+              onClick={() => setPicksOpen(!picksOpen)}
+              className="w-full flex items-center justify-between text-[13px] font-semibold text-ink uppercase tracking-widest py-1 cursor-pointer"
+            >
+              Top picks
+              <span className={`text-gray-400 transition-transform ${picksOpen ? "rotate-180" : ""}`}>▾</span>
+            </button>
+            {picksOpen && (
+              <div className="mt-3">
+                <TopPicks blogs={blogs} skip={5} showHeader={false} />
+              </div>
+            )}
           </div>
         </div>
       )}

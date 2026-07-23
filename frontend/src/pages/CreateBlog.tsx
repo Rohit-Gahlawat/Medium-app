@@ -2,7 +2,6 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { BACKEND_URL } from "../config"
-import SignOut from "../components/signout"
 
 export const CreateBlog = () => {
     const [title, setTitle] = useState("")
@@ -71,8 +70,6 @@ export const CreateBlog = () => {
                     >
                         {publishing ? "Publishing..." : "Publish"}
                     </button>
-
-                    <SignOut />
 
                     <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-sm font-semibold text-gray-700 cursor-pointer flex-shrink-0">
                         {(localStorage.getItem("name") || "U")[0].toUpperCase()}

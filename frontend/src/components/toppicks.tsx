@@ -16,7 +16,7 @@ type Blog = {
   }
 };
 
-export default function TopPicks({ blogs, skip }: { blogs: Blog[]; skip: number }) {
+export default function TopPicks({ blogs, skip, showHeader = true }: { blogs: Blog[]; skip: number; showHeader?: boolean }) {
 
   const picks = blogs
     .slice(skip)
@@ -30,9 +30,11 @@ export default function TopPicks({ blogs, skip }: { blogs: Blog[]; skip: number 
   return (
     <div className="lg:sticky lg:top-6">
 
-      <p className="text-[13px] font-semibold text-ink uppercase tracking-widest mb-4">
-        Top picks
-      </p>
+      {showHeader && (
+        <p className="text-[13px] font-semibold text-ink uppercase tracking-widest mb-4">
+          Top picks
+        </p>
+      )}
 
       <div className="space-y-5">
 
